@@ -49,3 +49,10 @@ randopois <- rpois(n = 104, lambda = 15)
 hist(x = randopois, xlim = c(0,30))
 ```
 
+
+
+
+
+
+
+
