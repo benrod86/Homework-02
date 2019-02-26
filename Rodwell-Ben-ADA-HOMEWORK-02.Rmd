@@ -97,6 +97,16 @@ popsd(d$zombies_killed)
 popsd(d$years_of_education)
 ```
 
+
+
+
+
+
+
+
+
+
+
 # 2.b. Use {ggplot} and make boxplots of each of these variable by gender.
 ```{r}
 library(ggplot2)
@@ -124,6 +134,11 @@ yearsofeducationbox
 
 
 
+
+
+
+
+
 # 2.c. Use {ggplot} and make scatterplots of height and weight in relation to age. Do these variables seem to be related? In what way?
 ```{r}
 heightscatter <- ggplot(d, aes(x= age, y= height)) + geom_point()
@@ -135,6 +150,11 @@ weightscatter
 ```
 
 ## Both of the height and weight variables seem to be correlated in that they both increase with age, but there seems to be a considerable amount of variability. There seems to be less of a correlation in the relationship between age and weight.
+
+
+
+
+
 
 
 
@@ -188,9 +208,58 @@ qqline(d$years_of_education, col = "gray")
 
 
 # 2.e. Now use the sample() function to sample ONE subset of 30 zombies (without replacement) from this population and calculate the mean and sample standard deviation for each variable. Also, # estimate the standard error for each variable and construct the 95% confidence interval for each mean. Note that for the variables that are not drawn from the normal distribution, you will need to base your estimate of the CIs on some different distribution!
-```{r}
 
+## First sample the population
+```{r}
+dsample<- d[sample(nrow(d), 30), ]
+head(dsample)
 ```
+
+## calculate mean for each variable
+```{r}
+mean(dsample$height)
+mean(dsample$weight)
+mean(dsample$age)
+mean(dsample$zombies_killed)
+mean(dsample$years_of_education)
+```
+
+## Calcualte Standard Deviation for each variable
+```{r}
+sd(dsample$height)
+sd(dsample$weight)
+sd(dsample$age)
+sd(dsample$zombies_killed)
+sd(dsample$years_of_education)
+```
+
+## Estimate Standard error for each variable
+### Create function to estimate Standard Error
+```{r}
+se <- function(x) {
+  sd(x)/sqrt(length(x))
+}
+```
+### Estimate Standard Error
+```{r}
+se(dsample$height)
+se(dsample$weight)
+se(dsample$age)
+se(dsample$zombies_killed)
+se(dsample$years_of_education)
+```
+
+## Create Confidence Inervals
+
+
+
+
+
+
+
+
+
+
 
 # 2.f. Now draw 99 more random samples of 30 zombies out and calculate the mean for each of the these samples. Together with the first sample you drew out, you now have a set of 100 means for each variable (each based on 30 observations), which constitutes a sampling distribution for each variable. What are the means and standard deviations of the sampling distribution for each variable? How do the standard deviations compare to the standard errors estimated in [2.e.]? What do these sampling distributions look like? Are they normally distributed? What about for those variables that you concluded were not originally drawn from a normal distribution?
 ```{r}

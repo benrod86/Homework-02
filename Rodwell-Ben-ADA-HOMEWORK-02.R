@@ -542,7 +542,6 @@ sample_se <- sample_sd/sqrt(n)  # a vector of SEs estimated from each sample
 # they have killed, and college major see here for info on important
 # post-zombie apocalypse majors
 
-x = c(1,3,5,7,9,7,6,5,4,6,7,8,4,4,2,5,5,7,4,3,2,1,3,4,6,7,8,0,9,9,8,8,8,7,6,6,6,5,4,3,2,1,3,3,54,5,6,7,7,8,8)
 # load in the zombies.csv dataset
 
 library(curl)
@@ -667,7 +666,7 @@ qqnorm(d$zombies_killed, main = "QQ plot Random Beta variable")
 qqline(v, col = "gray")
 
 n <- 1000
-v <- runif(n, shape1 = mean(d$zombies_killed), shape2 = popsd(d$zombies_killed))
+v <- rpois(n, lambda)
 qqnorm(d$zombies_killed, main = "QQ plot Random Beta variable")
 qqline(v, col = "gray")
 
@@ -692,7 +691,36 @@ length(d$years_of_education)
 # are not drawn from the normal distribution, you will need to base
 # your estimate of the CIs on some different distribution!
 
+## First sample the population
+dsample<- d[sample(nrow(d), 30), ]
+head(dsample)
 
+## calculate mean for each variable
+mean(dsample$height)
+mean(dsample$weight)
+mean(dsample$age)
+mean(dsample$zombies_killed)
+mean(dsample$years_of_education)
+
+## Calcualte Standard Deviation for each variable
+sd(dsample$height)
+sd(dsample$weight)
+sd(dsample$age)
+sd(dsample$zombies_killed)
+sd(dsample$years_of_education)
+
+## Estimate Standard error for each variable
+### Create function to estimate Standard Error
+se <- function(x) {
+  sd(x)/sqrt(length(x))
+}
+se(dsample$height)
+se(dsample$weight)
+se(dsample$age)
+se(dsample$zombies_killed)
+se(dsample$years_of_education)
+
+## Construct 95% confidence intervals for each variable
 
 
 
