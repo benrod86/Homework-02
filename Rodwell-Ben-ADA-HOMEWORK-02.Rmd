@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-#Every Saturday, at the same time, a primatologist goes and sits in the forest in the morning and listens for titi monkey calls, counting the number of calls they hear in a 2 hour window from 5am to 7am. Based on previous knowledge, she believes that the mean number calls she will hear in that time is 15. Let X represent the appropriate Poisson random variable of the number of calls heard in each monitoring session.
+# QUESTION 1: Every Saturday, at the same time, a primatologist goes and sits in the forest in the morning and listens for titi monkey calls, counting the number of calls they hear in a 2 hour window from 5am to 7am. Based on previous knowledge, she believes that the mean number calls she will hear in that time is 15. Let X represent the appropriate Poisson random variable of the number of calls heard in each monitoring session.
 
 ## 1.a. What is the probability that she will hear more than 8 calls during any given session?
 
@@ -51,8 +51,149 @@ hist(x = randopois, xlim = c(0,30))
 
 
 
+# QUESTION 2: Load in the dataset “zombies.csv” from my GitHub repository at https://github.com/difiore/ADA-2019. This data includes the first and last name and gender of the entire population of 1000 people who have survived the zombie apocalypse and are now ekeing out an existence somewhere on the East Coast, along with several other variables (height, weight, age, number of years of education, number of zombies they have killed, and college major see here for info on important post-zombie apocalypse majors.
+
+## Load in the zombies.csv dataset
+```{r}
+library(curl)
+f <- f <- curl("https://raw.githubusercontent.com/difiore/ADA-2019/master/zombies.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+```
+
+
+# 2.a. Calculate the population mean and standard deviation for each quantitative random variable (height, weight, age, number of zombies killed, and years of education).
+
+## A function to calculate population variance
+```{r}
+popvar <- function(x) {
+  sum((x - mean(x))^2)/(length(x))}
+popvar(x)
+```
+
+## A function to calculate polulation standard deviation
+```{r}
+popsd <- function(x) {
+  sqrt(popvar(x))}
+popsd(x)
+```
+
+## Calculate Mean for each variable
+```{r}
+mean(d$height)
+mean(d$weight)
+mean(d$age)
+mean(d$zombies_killed)
+mean(d$years_of_education)
+```
+
+
+## calculate SD for each variable
+```{r}
+popsd(d$height)
+popsd(d$weight)
+popsd(d$age)
+popsd(d$zombies_killed)
+popsd(d$years_of_education)
+```
+
+# 2.b. Use {ggplot} and make boxplots of each of these variable by gender.
+```{r}
+library(ggplot2)
+heightbox <- ggplot(d, aes(x = gender, y = height)) + 
+  geom_boxplot()
+heightbox
+
+weightbox <- ggplot(d, aes(x = gender, y = weight)) + 
+  geom_boxplot()
+weightbox
+
+agebox <- ggplot(d, aes( x = gender, y = age)) + 
+  geom_boxplot()
+agebox
+
+zombieskilledbox <- ggplot(d, aes(x = gender, y = zombies_killed)) + 
+  geom_boxplot()
+zombieskilledbox
+
+yearsofeducationbox <- ggplot( d, aes(x = gender, y = years_of_education)) +
+  geom_boxplot()
+yearsofeducationbox
+```
 
 
 
 
+# 2.c. Use {ggplot} and make scatterplots of height and weight in relation to age. Do these variables seem to be related? In what way?
+```{r}
+heightscatter <- ggplot(d, aes(x= age, y= height)) + geom_point()
+heightscatter
+
+weightscatter <- ggplot(d, aes(x= age, y= weight)) + geom_point()
+weightscatter
+
+```
+
+## Both of the height and weight variables seem to be correlated in that they both increase with age, but there seems to be a considerable amount of variability. There seems to be less of a correlation in the relationship between age and weight.
+
+
+
+
+# 2.d. Using histograms and Q-Q plots, check whether the quantitative variables seem to be drawn from a normal distribution. Which seem to be and which do not? For those that are not, can you determine what common distribution they are drawn from?
+
+## Height
+```{r}
+qqnorm(d$height, main = "Normal QQ plot Height")
+qqline(d$height, col = "gray")
+```
+
+
+## Weight
+```{r}
+qqnorm(d$weight, main = "Normal QQ plot Weight")
+qqline(d$weight, col = "gray")
+```
+
+## Age
+```{r}
+qqnorm(d$age, main = "Normal QQ plot Age")
+qqline(d$age, col = "gray")
+```
+
+## Zombies killed
+```{r}
+qqnorm(d$zombies_killed, main = "Normal QQ plot # of Zombies Killed")
+qqline(d$zombies_killed, col = "gray")
+```
+
+## Years of Education
+```{r}
+qqnorm(d$years_of_education, main = "Normal QQ plot Years of education")
+qqline(d$years_of_education, col = "gray")
+```
+
+### Neither of the variables # of zombies killed and, years of education are not normally distributed, while the other variables are normally distributed 
+
+### # of zombies killes
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+# 2.e. Now use the sample() function to sample ONE subset of 30 zombies (without replacement) from this population and calculate the mean and sample standard deviation for each variable. Also, # estimate the standard error for each variable and construct the 95% confidence interval for each mean. Note that for the variables that are not drawn from the normal distribution, you will need to base your estimate of the CIs on some different distribution!
+```{r}
+
+```
+
+# 2.f. Now draw 99 more random samples of 30 zombies out and calculate the mean for each of the these samples. Together with the first sample you drew out, you now have a set of 100 means for each variable (each based on 30 observations), which constitutes a sampling distribution for each variable. What are the means and standard deviations of the sampling distribution for each variable? How do the standard deviations compare to the standard errors estimated in [2.e.]? What do these sampling distributions look like? Are they normally distributed? What about for those variables that you concluded were not originally drawn from a normal distribution?
+```{r}
+
+```
 
