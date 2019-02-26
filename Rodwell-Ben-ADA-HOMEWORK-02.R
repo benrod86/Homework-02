@@ -721,7 +721,54 @@ se(dsample$zombies_killed)
 se(dsample$years_of_education)
 
 ## Construct 95% confidence intervals for each variable
+### HEIGHT
+qnorm(0.975, mean = mean(dsample$height), sd = sd(dsample$height))
+upperheight <- mean(dsample$height) + qnorm(0.975, mean = mean(dsample$height),
+      sd = sd(dsample$height)) * se(dsample$height)
+lowerheight <- mean(dsample$height) + qnorm(0.025, mean = mean(dsample$height),
+      sd = sd(dsample$height)) * se(dsample$height)
+ciheight <- c(lowerheight, upperheight)
+ciheight
 
+
+### WEIGHT
+qnorm(0.975, mean = mean(dsample$weight), sd = sd(dsample$weight))
+upperweight <- mean(dsample$weight) + qnorm(0.975, mean = mean(dsample$weight),
+      sd = sd(dsample$weight)) * se(dsample$weight)
+lowerweight <- mean(dsample$weight) + qnorm(0.025, mean = mean(dsample$weight),
+      sd = sd(dsample$weight)) * se(dsample$weight)
+ciweight <- c(lowerweight, upperweight)
+ciweight
+
+
+## AGE
+qnorm(0.975, mean = mean(dsample$age), sd = sd(dsample$age))
+upperage <- mean(dsample$age) + qnorm(0.975, mean = mean(dsample$age),
+      sd = sd(dsample$age)) * se(dsample$age)
+lowerage <- mean(dsample$age) + qnorm(0.025, mean = mean(dsample$age),
+      sd = sd(dsample$age)) * se(dsample$age)
+ciage <- c(lowerage, upperage)
+ciage
+
+
+## ZOMBIES KILLED
+qnorm(0.975, mean = mean(dsample$zombies_killed), sd = sd(dsample$zombies_killed))
+upperzombies_killed <- mean(dsample$zombies_killed) + qnorm(0.975, mean = mean(dsample$zombies_killed),
+      sd = sd(dsample$zombies_killed)) * se(dsample$zombies_killed)
+lowerzombies_killed <- mean(dsample$zombies_killed) + qnorm(0.025, mean = mean(dsample$zombies_killed),
+      sd = sd(dsample$zombies_killed)) * se(dsample$zombies_killed)
+ciheight <- c(lowerzombies_killed, upperzombies_killed)
+ciheight
+
+
+## YEARS OF EDCUCATION
+qnorm(0.975, mean = mean(dsample$years_of_education), sd = sd(dsample$years_of_education))
+upperyears_of_education <- mean(dsample$years_of_education) + qnorm(0.975, mean = mean(dsample$years_of_education),
+      sd = sd(dsample$years_of_education)) * se(dsample$years_of_education)
+loweryear_of_education <- mean(dsample$years_of_education) + qnorm(0.025, mean = mean(dsample$years_of_education),
+      sd = sd(dsample$years_of_education)) * se(dsample$years_of_education)
+ciheight <- c(loweryear_of_education, upperyears_of_education)
+ciheight
 
 
 
@@ -737,8 +784,55 @@ se(dsample$years_of_education)
 # that you concluded were not originally drawn from a normal distribution?
 
 
+k <- 99  # number of samples
+n <- 10  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+  s[[i]] <- sample(x, size = n, replace = FALSE)
+}
+head(s)
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+set.seed(1)
+x <- rnorm(1e+06, 25, 5)
+hist(x, probability = TRUE)
+
+mu <- mean(x)
+mu
+sigma <- sqrt(sum((x - mean(x))^2)/length(x))
+sigma
+
+k <- 5000  # number of samples
+n <- 10  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+  s[[i]] <- sample(x, size = n, replace = FALSE)
+}
+head(s)
+
+m <- NULL
+for (i in 1:k) {
+  m[i] <- mean(s[[i]])
+}
+mean(m)
