@@ -846,8 +846,9 @@ range(dsample$years_of_education)
 
 
 
-## Sample eache variable of interest from in 99 iterations of 30 samples
+## Sample each variable of interest from in 99 iterations of 30 samples
 ## from the original dataset
+
 k <- 99 
 n <- 30  
 dsample2 <- NULL  
