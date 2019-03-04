@@ -57,7 +57,6 @@ hist(x = randopois, xlim = c(0,30))
 ```{r}
 library(tidyverse)
 library(curl)
-library(manipulate)
 library(ggplot2)
 library(dplyr)
 f <- f <- curl("https://raw.githubusercontent.com/difiore/ADA-2019/master/zombies.csv")
@@ -75,14 +74,14 @@ popvar <- function(x) {
 popvar(x)
 ```
 
-## A function to calculate polulation standard deviation
+## A function to calculate population standard deviation
 ```{r}
 popsd <- function(x) {
   sqrt(popvar(x))}
 popsd(x)
 ```
 
-## Calculate Mean for each variable
+## Calculate mean for each variable
 ```{r}
 mean(d$height)
 mean(d$weight)
@@ -92,7 +91,7 @@ mean(d$years_of_education)
 ```
 
 
-## calculate SD for each variable
+## Calculate SD for each variable
 ```{r}
 popsd(d$height)
 popsd(d$weight)
