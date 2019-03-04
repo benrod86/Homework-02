@@ -139,10 +139,6 @@ yearsofeducationbox
 
 
 
-
-
-
-
 # 2.c. Use {ggplot} and make scatterplots of height and weight in relation to age. Do these variables seem to be related? In what way?
 ```{r}
 heightfit = lm(d$height~d$age)
@@ -179,7 +175,7 @@ qqnorm(d$height, main = "Normal QQ plot Height")
 qqline(d$height, col = "gray")
 ```
 
-### Height appears to have a normal distribution
+### Height does have a normal distribution
 
 ## Weight
 ```{r}
@@ -187,15 +183,16 @@ qqnorm(d$weight, main = "Normal QQ plot Weight")
 qqline(d$weight, col = "gray")
 ```
 
-### Weight appears to have a normal distribution
+### Weight does a normal distribution
 
 ## Age
 ```{r}
 qqnorm(d$age, main = "Normal QQ plot Age")
 qqline(d$age, col = "gray")
+hist(d$zombies_killed)
 ```
 
-### Age appears to have a normal distribution
+### Age does not have a normal distribution, it appears to be a poisson distribution
 
 ## Zombies killed
 ```{r}
@@ -261,19 +258,14 @@ se(dsample$years_of_education)
 ## Construct 95% confidence intervals for each variable
 ### HEIGHT
 ```{r}
-qnorm(0.975, mean = mean(dsample$height), sd = sd(dsample$height))
 upperheight <- mean(dsample$height) + qnorm(0.975) * se(dsample$height)
 lowerheight <- mean(dsample$height) - qnorm(0.975) * se(dsample$height)
 ciheight <- c(lowerheight, upperheight)
 ciheight
-
-
-
 ```
 
 ### WEIGHT
 ```{r}
-qnorm(0.975, mean = mean(dsample$weight), sd = sd(dsample$weight))
 upperweight <- mean(dsample$weight) + qnorm(0.975) * se(dsample$weight)
 lowerweight <- mean(dsample$weight) - qnorm(0.975) * se(dsample$weight)
 ciweight <- c(lowerweight, upperweight)
@@ -282,16 +274,14 @@ ciweight
 
 ## AGE
 ```{r}
-qnorm(0.975, mean = mean(dsample$age), sd = sd(dsample$age))
-upperage <- mean(dsample$age) + qnorm(0.975) * se(dsample$age)
-lowerage <- mean(dsample$age) - qnorm(0.975) * se(dsample$age)
+upperage <- mean(dsample$age) + qpois(0.975, lambda = mean(dsample$age)) * se(dsample$age)
+lowerage <- mean(dsample$age) - qpois(0.975, lambda = mean(dsample$age)) * se(dsample$age)
 ciage <- c(lowerage, upperage)
 ciage
 ```
 
 ## ZOMBIES KILLED
 ```{r}
-qpois(0.975, lambda = mean(dsample$zombies_killed))
 upperzombies <- mean(dsample$zombies_killed) + qpois(0.975,
       lambda = mean(dsample$zombies_killed)) * se(dsample$zombies_killed)
 lowerzombies <- mean(dsample$zombies_killed) - qpois(0.975,
@@ -302,7 +292,6 @@ cizombies
 
 ## YEARS OF EDCUCATION
 ```{r}
-qpois(0.975, lambda = mean(dsample$years_of_education))
 upperyears_of_education <- mean(dsample$years_of_education) + qpois(0.975,
       lambda = mean(dsample$years_of_education)) * se(dsample$years_of_education)
 loweryears_of_education <- mean(dsample$years_of_education) - qpois(0.975,
@@ -420,29 +409,33 @@ se(sampledist$dsampleSEzombies)
 se(sampledist$dsampleSEeducation)
 ```
 
-## How do the sampling distribution SD's compare to the SD's from 2e
+## How do the sampling distribution SD's compare to the SE's from 2e
 ```{r}
-sd(dsample$height)
-mean(sampledist$dsampleSDheight)
+se(dsample$height)
+sd(sampledist$dsampleSDheight)
 
-sd(dsample$weight)
-mean(sampledist$dsampleSDweight)
+se(dsample$weight)
+sd(sampledist$dsampleSDweight)
 
-sd(dsample$age)
-mean(sampledist$dsampleSDage)
+se(dsample$age)
+sd(sampledist$dsampleSDage)
 
-sd(dsample$zombies_killed)
-mean(sampledist$dsampleSDzombies)
+se(dsample$zombies_killed)
+sd(sampledist$dsampleSDzombies)
 
-sd(dsample$years_of_education)
-mean(sampledist$dsampleSDeducation)
+se(dsample$years_of_education)
+sd(sampledist$dsampleSDeducation)
+
+
 ```
-### ???????????????????????????????
+
+### In all cases the SE's from 2.e. are slightly higher than the SD's of the sampling distribution
+
+
 
 ## What do these sampling distributions look like? Are they normally distributed? What about for those variables that you concluded were not originally drawn from a normal distribution?
 
 ### Create Histograms and QQ plots of each variable
-
 ### Mean Height
 ```{r}
 hist(sampledist$dsamplemeanheight)
@@ -450,6 +443,7 @@ qqnorm(sampledist$dsamplemeanheight, main = "Normal QQ plot Height")
 qqline(sampledist$dsamplemeanheight, col = "gray")
 ```
 
+#### Mean height is normally distributed
 
 ### Mean Weight
 ```{r}
@@ -457,6 +451,8 @@ hist(sampledist$dsamplemeanweight)
 qqnorm(sampledist$dsamplemeanweight, main = "Normal QQ plot Weight")
 qqline(sampledist$dsamplemeanweight, col = "gray")
 ```
+
+#### Mean weight is not normally distributed
 
 
 
@@ -467,6 +463,8 @@ qqnorm(sampledist$dsamplemeanage, main = "Normal QQ plot Age")
 qqline(sampledist$dsamplemeanage, col = "gray")
 ```
 
+#### Mean age is not normally distributed
+
 
 ### Mean Zombies Killed
 ```{r}
@@ -474,6 +472,8 @@ hist(sampledist$dsamplemeanzombies)
 qqnorm(sampledist$dsamplemeanzombies, main = "Normal QQ plot Mean # of Zombies Killed")
 qqline(sampledist$dsamplemeanzombies, col = "gray")
 ```
+
+#### Mean zombies killed is not normally distributed
 
 
 ### Mean Years of Education
@@ -483,6 +483,8 @@ qqnorm(sampledist$dsamplemeaneducation, main = "Normal QQ plot Mean Years of Edu
 qqline(sampledist$dsamplemeaneducation, col = "gray")
 ```
 
+#### Mean years of education is not normally distributed
+
 
 ### SD Height
 ```{r}
@@ -490,6 +492,8 @@ hist(sampledist$dsampleSDheight)
 qqnorm(sampledist$dsampleSDheight, main = "Normal QQ plot SD Height")
 qqline(sampledist$dsampleSDheight, col = "gray")
 ```
+
+#### SD height is not normally distributed
 
 
 ### SD Weight
@@ -499,6 +503,8 @@ qqnorm(sampledist$dsampleSDweight, main = "Normal QQ plot SD Weight")
 qqline(sampledist$dsampleSDweight, col = "gray")
 ```
 
+#### SD weight is not normally distributed
+
 
 ### SD Age
 ```{r}
@@ -506,6 +512,8 @@ hist(sampledist$dsampleSDage)
 qqnorm(sampledist$dsampleSDage, main = "Normal QQ plot SD Age")
 qqline(sampledist$dsampleSDage, col = "gray")
 ```
+
+#### SD age is not normally distributed
 
 
 ### SD Zombies Killed
@@ -515,6 +523,8 @@ qqnorm(sampledist$dsampleSDzombies, main = "Normal QQ plot SD # of Zombies Kille
 qqline(sampledist$dsampleSDzombies, col = "gray")
 ```
 
+#### SD zombies killed is normally distributed
+
 
 ### SD Years of Education
 ```{r}
@@ -522,6 +532,8 @@ hist(sampledist$dsampleSDeducation)
 qqnorm(sampledist$dsampleSDeducation, main = "Normal QQ plot SD Years of Education")
 qqline(sampledist$dsampleSDeducation, col = "gray")
 ```
+
+#### SD years of education is not normally distributed
 
 
 ### SE Height
@@ -531,6 +543,8 @@ qqnorm(sampledist$dsampleSEheight, main = "Normal QQ plot SE Height")
 qqline(sampledist$dsampleSEheight, col = "gray")
 ```
 
+#### SE height is not normally distributed
+
 
 ### SE Weight
 ```{r}
@@ -538,6 +552,8 @@ hist(sampledist$dsampleSEweight)
 qqnorm(sampledist$dsampleSEweight, main = "Normal QQ plot SE Weight")
 qqline(sampledist$dsampleSEweight, col = "gray")
 ```
+
+#### SE weight is not normally distributed
 
 
 ### SE Age
@@ -547,6 +563,8 @@ qqnorm(sampledist$dsampleSEage, main = "Normal QQ plot SE Age")
 qqline(sampledist$dsampleSEage, col = "gray")
 ```
 
+#### SE age is not normally distributed
+
 
 ### SE Zombies Killed
 ```{r}
@@ -555,6 +573,8 @@ qqnorm(sampledist$dsampleSEzombies, main = "Normal QQ plot SE # of Zombies Kille
 qqline(sampledist$dsampleSEzombies, col = "gray")
 ```
 
+#### SE zombies killed is not normally distributed
+
 
 ### SE Years of Education
 ```{r}
@@ -562,3 +582,5 @@ hist(sampledist$dsampleSEeducation)
 qqnorm(sampledist$dsampleSEeducation, main = "Normal QQ plot SE Years of Education")
 qqline(sampledist$dsampleSEeducation, col = "gray")
 ```
+
+#### SE years of education is not normally distributed

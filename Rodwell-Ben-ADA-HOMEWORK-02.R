@@ -623,7 +623,6 @@ hist(x = simtiticalls, xlim = c(0,30))
 # load in the zombies.csv dataset
 library(tidyverse)
 library(curl)
-library(manipulate)
 library(ggplot2)
 library(dplyr)
 f <- f <- curl("https://raw.githubusercontent.com/difiore/ADA-2019/master/zombies.csv")
@@ -757,7 +756,7 @@ hist(d$years_of_education)
 
 ## First sample the population
 dsample <- sample_n(d, size = 30, replace = FALSE)
-head(sampled)
+head(dsample)
 dsample <- d[sample(1:1000, 30, replace=FALSE), ]
 head(dsample)
 
@@ -793,7 +792,7 @@ upperheight <- mean(dsample$height) + qnorm(0.975) * se(dsample$height)
 lowerheight <- mean(dsample$height) - qnorm(0.975) * se(dsample$height)
 ciheight <- c(lowerheight, upperheight)
 ciheight
-
+range(dsample$height)
 
 ### WEIGHT
 qnorm(0.975, mean = mean(dsample$weight), sd = sd(dsample$weight))
@@ -801,15 +800,15 @@ upperweight <- mean(dsample$weight) + qnorm(0.975) * se(dsample$weight)
 lowerweight <- mean(dsample$weight) - qnorm(0.975) * se(dsample$weight)
 ciweight <- c(lowerweight, upperweight)
 ciweight
-
+range(dsample$weight)
 
 ## AGE
 qnorm(0.975, mean = mean(dsample$age), sd = sd(dsample$age))
-upperage <- mean(dsample$age) + qnorm(0.975) * se(dsample$age)
-lowerage <- mean(dsample$age) - qnorm(0.975) * se(dsample$age)
+upperage <- mean(dsample$age) + qpois(0.975, lambda = mean(dsample$age)) * se(dsample$age)
+lowerage <- mean(dsample$age) - qpois(0.975, lambda = mean(dsample$age)) * se(dsample$age)
 ciage <- c(lowerage, upperage)
 ciage
-
+range(dsample$age)
 
 ## ZOMBIES KILLED
 qpois(0.975, lambda = mean(dsample$zombies_killed))
@@ -819,7 +818,7 @@ lowerzombies <- mean(dsample$zombies_killed) - qpois(0.975,
       lambda = mean(dsample$zombies_killed)) * se(dsample$zombies_killed)
 cizombies <- c(lowerzombies, upperzombies)
 cizombies
-
+range(dsample$zombies_killed)
 
 ## YEARS OF EDCUCATION
 qpois(0.975, lambda = mean(dsample$years_of_education))
@@ -829,7 +828,7 @@ loweryears_of_education <- mean(dsample$years_of_education) - qpois(0.975,
       lambda = mean(dsample$years_of_education)) * se(dsample$years_of_education)
 cieducation <- c(loweryears_of_education, upperyears_of_education)
 cieducation
-
+range(dsample$years_of_education)
 
 
 # 2.f. Now draw 99 more random samples of 30 zombies out and calculate
@@ -923,7 +922,7 @@ dsamplemeans <- c(mean(dsample$height), sd(dsample$height), se(dsample$height),
                   mean(dsample$years_of_education), sd(dsample$years_of_education), se(dsample$years_of_education))
 sampledist <- rbind(sampledist, dsamplemeans)
 
-### Determine the mean of means, mean of SD's, and mean of SE's of the sample distribution
+### What are the means and standard deviations of the sampling distribution for each variable?
 #### Mean of Means for each variable
 mean(sampledist$dsamplemeanheight)
 mean(sampledist$dsamplemeanweight)
@@ -932,36 +931,62 @@ mean(sampledist$dsamplemeanzombies)
 mean(sampledist$dsamplemeaneducation)
 
 #### Mean of SD's for each variable
+mean(sampledist$dsampleSDheight)
+mean(sampledist$dsampleSDweight)
+mean(sampledist$dsampleSDage)
+mean(sampledist$dsampleSDzombies)
+mean(sampledist$dsampleSDeducation)
+
+#### Mean of SE's for each variable
+mean(sampledist$dsampleSEheight)
+mean(sampledist$dsampleSEweight)
+mean(sampledist$dsampleSEage)
+mean(sampledist$dsampleSEzombies)
+mean(sampledist$dsampleSEeducation)
+
+####  SD of Mean for each variable
+sd(sampledist$dsamplemeanheight)
+sd(sampledist$dsamplemeanweight)
+sd(sampledist$dsamplemeanage)
+sd(sampledist$dsamplemeanzombies)
+sd(sampledist$dsamplemeaneducation)
+
+#### SD of SD's for each variable
 sd(sampledist$dsampleSDheight)
 sd(sampledist$dsampleSDweight)
 sd(sampledist$dsampleSDage)
 sd(sampledist$dsampleSDzombies)
 sd(sampledist$dsampleSDeducation)
 
-#### Mean of SE's for each variable
-se(sampledist$dsampleSEheight)
-se(sampledist$dsampleSEweight)
-se(sampledist$dsampleSEage)
-se(sampledist$dsampleSEzombies)
-se(sampledist$dsampleSEeducation)
+#### SD of SE's for each variable
+sd(sampledist$dsampleSEheight)
+sd(sampledist$dsampleSEweight)
+sd(sampledist$dsampleSEage)
+sd(sampledist$dsampleSEzombies)
+sd(sampledist$dsampleSEeducation)
 
-### How do the sampling distribution SD's compare to the SD's from 2e
-#### SD
+### How do the standard deviations compare to the standard errors estimated in [2.e.]?
 
-sd(dsample$height)
-mean(sampledist$dsampleSDheight)
 
-sd(dsample$weight)
-mean(sampledist$dsampleSDweight)
+se(dsample$height)
+sd(sampledist$dsampleSDheight)
 
-sd(dsample$age)
-mean(sampledist$dsampleSDage)
+se(dsample$weight)
+sd(sampledist$dsampleSDweight)
 
-sd(dsample$zombies_killed)
-mean(sampledist$dsampleSDzombies)
+se(dsample$age)
+sd(sampledist$dsampleSDage)
 
-sd(dsample$years_of_education)
-mean(sampledist$dsampleSDeducation)
+se(dsample$zombies_killed)
+sd(sampledist$dsampleSDzombies)
+
+se(dsample$years_of_education)
+sd(sampledist$dsampleSDeducation)
+
+#### In all cases the SE's from 2.e. are slightly higher than the SD's of the sampling distribution
+
+
+
 
 
 
@@ -970,63 +995,88 @@ mean(sampledist$dsampleSDeducation)
 ### that you concluded were not originally drawn from a normal distribution?
 hist(sampledist$dsamplemeanheight)
 qqnorm(sampledist$dsamplemeanheight, main = "Normal QQ plot Height")
-qqline(sampledist$dsamplemeanheight, col = "gray")
+qqline(sampledist$dsamplemeanheight, col = "black")
+#### Mean Height is normally distributed
 
 hist(sampledist$dsamplemeanweight)
 qqnorm(sampledist$dsamplemeanweight, main = "Normal QQ plot Weight")
-qqline(sampledist$dsamplemeanweight, col = "gray")
+qqline(sampledist$dsamplemeanweight, col = "black")
+#### Mean weight is not normally distributed
 
 hist(sampledist$dsamplemeanage)
 qqnorm(sampledist$dsamplemeanage, main = "Normal QQ plot Age")
-qqline(sampledist$dsamplemeanage, col = "gray")
+qqline(sampledist$dsamplemeanage, col = "black")
+#### Mean age is not normally distributed
 
 hist(sampledist$dsamplemeanzombies)
 qqnorm(sampledist$dsamplemeanzombies, main = "Normal QQ plot Mean # of Zombies Killed")
 qqline(sampledist$dsamplemeanzombies, col = "gray")
+#### Mean zombies killed is not normally distributed
+
 
 hist(sampledist$dsamplemeaneducation)
 qqnorm(sampledist$dsamplemeaneducation, main = "Normal QQ plot Mean Years of Education")
 qqline(sampledist$dsamplemeaneducation, col = "gray")
+#### Mean years of education is not normally distributed
+
 
 hist(sampledist$dsampleSDheight)
 qqnorm(sampledist$dsampleSDheight, main = "Normal QQ plot SD Height")
 qqline(sampledist$dsampleSDheight, col = "gray")
+#### SD height is not normally distributed
+
 
 hist(sampledist$dsampleSDweight)
 qqnorm(sampledist$dsampleSDweight, main = "Normal QQ plot SD Weight")
 qqline(sampledist$dsampleSDweight, col = "gray")
+#### SD weight is not normally distributed
+
 
 hist(sampledist$dsampleSDage)
 qqnorm(sampledist$dsampleSDage, main = "Normal QQ plot SD Age")
 qqline(sampledist$dsampleSDage, col = "gray")
+#### SD age is not normally distributed
+
 
 hist(sampledist$dsampleSDzombies)
 qqnorm(sampledist$dsampleSDzombies, main = "Normal QQ plot SD # of Zombies Killed")
 qqline(sampledist$dsampleSDzombies, col = "gray")
+#### SD zombies killed is normally distributed
+
 
 hist(sampledist$dsampleSDeducation)
 qqnorm(sampledist$dsampleSDeducation, main = "Normal QQ plot SD Years of Education")
 qqline(sampledist$dsampleSDeducation, col = "gray")
+#### SD years of education is not normally distributed
+
 
 hist(sampledist$dsampleSEheight)
 qqnorm(sampledist$dsampleSEheight, main = "Normal QQ plot SE Height")
 qqline(sampledist$dsampleSEheight, col = "gray")
+#### SE height is not normally distributed
+
 
 hist(sampledist$dsampleSEweight)
 qqnorm(sampledist$dsampleSEweight, main = "Normal QQ plot SE Weight")
 qqline(sampledist$dsampleSEweight, col = "gray")
+#### SE weight is not normally distributed
+
 
 hist(sampledist$dsampleSEage)
 qqnorm(sampledist$dsampleSEage, main = "Normal QQ plot SE Age")
 qqline(sampledist$dsampleSEage, col = "gray")
+#### SE age is not normally distributed
+
 
 hist(sampledist$dsampleSEzombies)
 qqnorm(sampledist$dsampleSEzombies, main = "Normal QQ plot SE # of Zombies Killed")
 qqline(sampledist$dsampleSEzombies, col = "gray")
+#### SE zombies killed is not normally distributed
 
 hist(sampledist$dsampleSEeducation)
 qqnorm(sampledist$dsampleSEeducation, main = "Normal QQ plot SE Years of Education")
 qqline(sampledist$dsampleSEeducation, col = "gray")
+#### SE years of education is not normally distributed
 
 
 
@@ -1039,19 +1089,4 @@ qqline(sampledist$dsampleSEeducation, col = "gray")
 
 
 
-qpois(0.975, lambda = mean(dsample$zombies_killed))
-upperheight <- mean(dsample$zombies_killed) + qpois(0.975,
-      lambda = mean(dsample$zombies_killed)) * se(dsample$zombies_killed)
-lowerheight <- mean(dsample$zombies_killed) - qpois(0.975,
-      lambda = mean(dsample$zombies_killed)) * se(dsample$zombies_killed)
-ciheight <- c(lowerheight, upperheight)
-ciheight
-hist()
-
-qnorm(0.975, mean = mean(dsample$zombies_killed), sd = sd(dsample$zombies_killed))
-upperzombies <- mean(dsample$zombies_killed) + qnorm(0.975) * se(dsample$zombies_killed)
-lowerzombies <- mean(dsample$zombies_killed) - qnorm(0.975) * se(dsample$zombies_killed)
-ciheight <- c(lowerzombies, upperzombies)
-ciheight
-hist()
 
