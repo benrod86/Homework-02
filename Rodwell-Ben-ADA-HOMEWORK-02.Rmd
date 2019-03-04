@@ -443,7 +443,7 @@ mean(sampledist$dsampleSDeducation)
 
 ### Create Histograms and QQ plots of each variable
 
-#### Mean Height
+### Mean Height
 ```{r}
 hist(sampledist$dsamplemeanheight)
 qqnorm(sampledist$dsamplemeanheight, main = "Normal QQ plot Height")
@@ -451,7 +451,7 @@ qqline(sampledist$dsamplemeanheight, col = "gray")
 ```
 
 
-#### Mean Weight
+### Mean Weight
 ```{r}
 hist(sampledist$dsamplemeanweight)
 qqnorm(sampledist$dsamplemeanweight, main = "Normal QQ plot Weight")
@@ -460,7 +460,7 @@ qqline(sampledist$dsamplemeanweight, col = "gray")
 
 
 
-#### Mean Age
+### Mean Age
 ```{r}
 hist(sampledist$dsamplemeanage)
 qqnorm(sampledist$dsamplemeanage, main = "Normal QQ plot Age")
@@ -468,7 +468,7 @@ qqline(sampledist$dsamplemeanage, col = "gray")
 ```
 
 
-#### Mean Zombies Killed
+### Mean Zombies Killed
 ```{r}
 hist(sampledist$dsamplemeanzombies)
 qqnorm(sampledist$dsamplemeanzombies, main = "Normal QQ plot Mean # of Zombies Killed")
@@ -476,7 +476,7 @@ qqline(sampledist$dsamplemeanzombies, col = "gray")
 ```
 
 
-#### Mean Years of Education
+### Mean Years of Education
 ```{r}
 hist(sampledist$dsamplemeaneducation)
 qqnorm(sampledist$dsamplemeaneducation, main = "Normal QQ plot Mean Years of Education")
@@ -484,7 +484,7 @@ qqline(sampledist$dsamplemeaneducation, col = "gray")
 ```
 
 
-#### SD Height
+### SD Height
 ```{r}
 hist(sampledist$dsampleSDheight)
 qqnorm(sampledist$dsampleSDheight, main = "Normal QQ plot SD Height")
@@ -492,7 +492,7 @@ qqline(sampledist$dsampleSDheight, col = "gray")
 ```
 
 
-#### SD Weight
+### SD Weight
 ```{r}
 hist(sampledist$dsampleSDweight)
 qqnorm(sampledist$dsampleSDweight, main = "Normal QQ plot SD Weight")
@@ -500,7 +500,7 @@ qqline(sampledist$dsampleSDweight, col = "gray")
 ```
 
 
-#### SD Age
+### SD Age
 ```{r}
 hist(sampledist$dsampleSDage)
 qqnorm(sampledist$dsampleSDage, main = "Normal QQ plot SD Age")
@@ -508,7 +508,7 @@ qqline(sampledist$dsampleSDage, col = "gray")
 ```
 
 
-#### SD Zombies Killed
+### SD Zombies Killed
 ```{r}
 hist(sampledist$dsampleSDzombies)
 qqnorm(sampledist$dsampleSDzombies, main = "Normal QQ plot SD # of Zombies Killed")
@@ -516,7 +516,7 @@ qqline(sampledist$dsampleSDzombies, col = "gray")
 ```
 
 
-#### SD Years of Education
+### SD Years of Education
 ```{r}
 hist(sampledist$dsampleSDeducation)
 qqnorm(sampledist$dsampleSDeducation, main = "Normal QQ plot SD Years of Education")
@@ -524,7 +524,7 @@ qqline(sampledist$dsampleSDeducation, col = "gray")
 ```
 
 
-#### SE Height
+### SE Height
 ```{r}
 hist(sampledist$dsampleSEheight)
 qqnorm(sampledist$dsampleSEheight, main = "Normal QQ plot SE Height")
@@ -532,7 +532,7 @@ qqline(sampledist$dsampleSEheight, col = "gray")
 ```
 
 
-#### SE Weight
+### SE Weight
 ```{r}
 hist(sampledist$dsampleSEweight)
 qqnorm(sampledist$dsampleSEweight, main = "Normal QQ plot SE Weight")
@@ -540,7 +540,7 @@ qqline(sampledist$dsampleSEweight, col = "gray")
 ```
 
 
-SE Age
+### SE Age
 ```{r}
 hist(sampledist$dsampleSEage)
 qqnorm(sampledist$dsampleSEage, main = "Normal QQ plot SE Age")
@@ -548,7 +548,7 @@ qqline(sampledist$dsampleSEage, col = "gray")
 ```
 
 
-#### SE Zombies Killed
+### SE Zombies Killed
 ```{r}
 hist(sampledist$dsampleSEzombies)
 qqnorm(sampledist$dsampleSEzombies, main = "Normal QQ plot SE # of Zombies Killed")
@@ -556,7 +556,7 @@ qqline(sampledist$dsampleSEzombies, col = "gray")
 ```
 
 
-#### SE Years of Education
+### SE Years of Education
 ```{r}
 hist(sampledist$dsampleSEeducation)
 qqnorm(sampledist$dsampleSEeducation, main = "Normal QQ plot SE Years of Education")
